@@ -2,7 +2,7 @@ package org.karen.lock;
 
 public interface ActionableTTASLock {
 
-    void lock(Runnable onSpinAction);
+    void lockTTAS(Runnable onSpinAction);
     void unlock();
 
 }

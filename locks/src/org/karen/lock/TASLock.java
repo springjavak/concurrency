@@ -2,7 +2,7 @@ package org.karen.lock;
 
 public interface TASLock {
 
-    void lock();
+    void lockTAS();
     void unlock();
 
 }
