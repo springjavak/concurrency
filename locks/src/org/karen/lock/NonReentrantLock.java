@@ -7,16 +7,12 @@ public class NonReentrantLock implements TASLock, TTASLock, ActionableTASLock, A
 
     @Override
     public void lockTAS() {
-        while (locked.getAndSet(true)) {
-        }
+        while (locked.getAndSet(true));
     }
 
     @Override
     public void lockTTAS() {
-        while (locked.get()) {
-        }
-        while (locked.getAndSet(true)) {
-        }
+        while (locked.get() && locked.getAndSet(true));
     }
 
     @Override
@@ -28,10 +24,7 @@ public class NonReentrantLock implements TASLock, TTASLock, ActionableTASLock, A
 
     @Override
     public void lockTTAS(Runnable onSpinAction) {
-        while (locked.get()) {
-            onSpinAction.run();
-        }
-        while (locked.getAndSet(true)) {
+        while (locked.get() && locked.getAndSet(true)) {
             onSpinAction.run();
         }
     }
