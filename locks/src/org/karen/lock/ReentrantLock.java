@@ -14,15 +14,16 @@ public class ReentrantLock implements TTASLock {
         ReentrantLockState localState;
         long threadCount;
         long threadId;
-        boolean allowedToEnter;
+        boolean notAllowedToEnter;
         do {
             do {
                 localState = state.get();
                 threadCount = localState.threadCount;
                 threadCount++;
                 threadId = localState.threadId;
+                notAllowedToEnter = threadId != currentThreadId && threadId > -1;
             }
-            while (threadId != currentThreadId && threadId > -1);
+            while (notAllowedToEnter);
         } while (!state.compareAndSet(localState, new ReentrantLockState(currentThreadId, threadCount)));
     }
 
