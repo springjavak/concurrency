@@ -7,9 +7,9 @@ public class LockApplication {
 
     public static void main(String[] args) {
 
-        TTASLock lock2 = new ReentrantLock();
-        lock2.lockTTAS();
-        lock2.lockTTAS();
+        TASLock lock2 = new ReentrantLock();
+        lock2.lockTAS();
+        lock2.lockTAS();
         System.out.println("Reentered!");
 
         TASLock lock = new NonReentrantLock();
