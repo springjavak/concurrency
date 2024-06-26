@@ -23,7 +23,7 @@ public class ReentrantLock implements TTASLock {
                 threadId = localState.threadId;
             }
             while (threadId != currentThreadId && threadId > -1);
-        } while (!state.compareAndSet(localState, new ReentrantLockState(currentThreadId, threadCount))
+        } while (!state.compareAndSet(localState, new ReentrantLockState(currentThreadId, threadCount)));
     }
 
     @Override
