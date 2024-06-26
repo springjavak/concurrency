@@ -3,6 +3,7 @@ package org.karen.lock;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class ReentrantLock implements TTASLock {
+
     private record ReentrantLockState(long threadId, long threadCount) {
     }
 
