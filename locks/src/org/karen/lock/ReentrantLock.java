@@ -2,26 +2,28 @@ package org.karen.lock;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class ReentrantLock implements TASLock {
+public class ReentrantLock implements TTASLock {
     private record ReentrantLockState(long threadId, long threadCount) {
     }
 
     private final AtomicReference<ReentrantLockState> state = new AtomicReference<>(new ReentrantLockState(-1, 0));
 
     @Override
-    public void lockTAS() {
+    public void lockTTAS() {
         var currentThreadId = Thread.currentThread().getId();
         ReentrantLockState localState;
         long threadCount;
         long threadId;
         boolean allowedToEnter;
         do {
-            localState = state.get();
-            threadCount = localState.threadCount;
-            threadCount++;
-            threadId = localState.threadId;
-        }
-        while ((threadId != currentThreadId && threadId > -1) && !state.compareAndSet(localState, new ReentrantLockState(currentThreadId, threadCount)));
+            do {
+                localState = state.get();
+                threadCount = localState.threadCount;
+                threadCount++;
+                threadId = localState.threadId;
+            }
+            while (threadId != currentThreadId && threadId > -1);
+        } while (!state.compareAndSet(localState, new ReentrantLockState(currentThreadId, threadCount))
     }
 
     @Override
