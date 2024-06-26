@@ -2,7 +2,7 @@ package org.karen.lock;
 
 import java.util.concurrent.atomic.AtomicReference;
 
-public class TASReentrantLock implements TASLock {
+public class ReentrantLock implements TASLock {
     private record ReentrantLockState(long threadId, long threadCount) {
     }
 

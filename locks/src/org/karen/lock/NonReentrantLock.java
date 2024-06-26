@@ -2,7 +2,7 @@ package org.karen.lock;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class GenericLock implements TASLock, TTASLock, ActionableTASLock, ActionableTTASLock {
+public class NonReentrantLock implements TASLock, TTASLock, ActionableTASLock, ActionableTTASLock {
     private final AtomicBoolean locked = new AtomicBoolean();
 
     @Override
